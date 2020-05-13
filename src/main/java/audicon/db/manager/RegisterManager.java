@@ -11,6 +11,10 @@ import audicon.db.manager.base.BaseDBManager;
 import audicon.functional.bo.User;
 
 public class RegisterManager extends BaseDBManager {
+	
+	public RegisterManager() {
+		super();
+	}
 
 	public void insert(final User user) {
 		UserEntity userEntity = new UserEntity();
