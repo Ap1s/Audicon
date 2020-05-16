@@ -9,3 +9,4 @@ Build your run configuration with the maven goal: clean install java:exec -e
 * Eclipse Build 2020-03
 * Java JDK 14.0.1
 * Java JRE (build 1.8.0_251-b08)
+* DB: mariaDB root@localhost / PW: localhost
