@@ -11,7 +11,9 @@ import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
+import audicon.db.entity.UserEntity;
 import audicon.db.manager.LoginManager;
+import audicon.functional.bo.User;
 import audicon.gui.dashboard.DashboardScreen;
 
 public class LoginForm extends JPanel {
@@ -22,10 +24,12 @@ public class LoginForm extends JPanel {
 	private JPasswordField passwordInput;
 	
 	private JButton sendButton;
+	private LoginForm screen;
 	
 	public LoginForm() {
 		initForm();
 		assembleForm();
+		screen = this;
 	}
 	
 	public void initForm() {
@@ -58,10 +62,11 @@ public class LoginForm extends JPanel {
 			
 			String username = usernameInput.getText();
 			String password = new String(passwordInput.getPassword());
-			boolean validationResult = loginManager.login(username, password);
+			UserEntity validationResult = loginManager.login(username, password);
 			
-			if(validationResult == true) {
-				new DashboardScreen();
+			
+			if(validationResult != null) {
+				new DashboardScreen(new User(validationResult.getId(), validationResult.getUsername()));
 			}
 			else {
 				JOptionPane.showMessageDialog(null, "<html><h1>Username or password is wrong.</h1><p>Please try again</p></html>");

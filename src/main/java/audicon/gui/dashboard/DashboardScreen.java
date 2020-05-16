@@ -19,6 +19,7 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
+import audicon.functional.bo.User;
 import audicon.gui.baseScreens.MainScreen;
 import audicon.gui.conversion.ConversionProcessScreen;
 import audicon.gui.history.HistoryScreen;
@@ -28,11 +29,14 @@ public class DashboardScreen extends MainScreen {
 	private JPanel userPanel;
 	private JPanel actionPanel;
 	
+	private User user;
+	
 	private DashboardScreen screen;
 	
-	public DashboardScreen() {
+	public DashboardScreen(final User user) {
 		super("AudiCon Dashboard");
 		screen = this;
+		this.user = user;
 		setLayout(new FlowLayout());
 		assembleUserPanel();
 		assembleActionPanel();
@@ -44,7 +48,7 @@ public class DashboardScreen extends MainScreen {
 		userPanel.setSize(200, 500);
 		userPanel.setLayout(new BorderLayout());
 		
-		JLabel welcomeLabel = new JLabel("<html><h1>Welcome User</h1></html>");
+		JLabel welcomeLabel = new JLabel("<html><h1>Welcome User</h1><p>" + user.getUsername() + "</p></html>");
 		userPanel.add(welcomeLabel, BorderLayout.NORTH);
 		
 		JButton logoutButton = new JButton("Logout");
@@ -117,7 +121,7 @@ public class DashboardScreen extends MainScreen {
 		
 		private void openHistoryPage() {
 			screen.dispose();
-			new HistoryScreen();
+			new HistoryScreen(user);
 		}
 
 		private void openConversionFLow() {

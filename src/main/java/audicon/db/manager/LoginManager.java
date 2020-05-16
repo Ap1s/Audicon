@@ -15,14 +15,21 @@ public class LoginManager extends BaseDBManager {
 		super();
 	}
 	
-	public boolean login(final String username, final String password) {
+	public UserEntity login(final String username, final String password) {
 		Session session = sessionFactory.openSession();
 		
 		CriteriaBuilder cb = session.getCriteriaBuilder();
 		CriteriaQuery<UserEntity> cr = cb.createQuery(UserEntity.class);
 		Root<UserEntity> root = cr.from(UserEntity.class);
 		cr.select(root).where(cb.like(root.get("username"), username));
- 
-		return session.createQuery(cr).getResultList()!=null;
+		
+		try {
+			int id = session.createQuery(cr).getResultList().get(0).getId();
+			String uname = session.createQuery(cr).getResultList().get(0).getUsername();
+			return new UserEntity(id, uname, null);
+		}
+		catch(IndexOutOfBoundsException e) {
+			return null;
+		}
 	}
 }
