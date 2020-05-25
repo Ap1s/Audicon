@@ -5,6 +5,13 @@
 	<groupId>de</groupId>
 	<artifactId>audicon</artifactId>
 	<version>0.0.1</version>
+	<repositories>
+		<repository>
+		<id>jboss-maven2</id>
+			<url>https://repository.jboss.org/maven2/</url>
+		</repository>
+
+	</repositories>
 	<dependencies>
 		<!-- https://mvnrepository.com/artifact/org.hibernate/hibernate-core -->
 		<dependency>
@@ -48,14 +55,6 @@
 					<archive>
 						<manifestFile>${project.basedir}/src/META-INF/MANIFEST.MF</manifestFile>
 					</archive>
-				</configuration>
-			</plugin>
-			<plugin>
-				<groupId>org.codehaus.mojo</groupId>
-				<artifactId>exec-maven-plugin</artifactId>
-				<version>1.2.1</version>
-				<configuration>
-					<mainClass>audicon.AudiconStart</mainClass>
 				</configuration>
 			</plugin>
 		</plugins>
