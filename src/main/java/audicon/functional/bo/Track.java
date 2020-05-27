@@ -1,26 +1,16 @@
 package audicon.functional.bo;
 
 public class Track {
-	private int id;
-	private int user_id;
 	private String title;
 	private String artist;
 	private String length;
 	
-	public int getId() {
-		return id;
-	}
-
-	public void setId(int id) {
-		this.id = id;
-	}
-
-	public int getUser_id() {
-		return user_id;
-	}
-
-	public void setUser_id(int user_id) {
-		this.user_id = user_id;
+ 
+	public Track(String title, String artist, String length) {
+		super();
+		this.title = title;
+		this.artist = artist;
+		this.length = length;
 	}
 
 	public String getTitle() {

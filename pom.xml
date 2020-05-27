@@ -7,7 +7,7 @@
 	<version>0.0.1</version>
 	<repositories>
 		<repository>
-		<id>jboss-maven2</id>
+			<id>jboss-maven2</id>
 			<url>https://repository.jboss.org/maven2/</url>
 		</repository>
 
@@ -55,6 +55,14 @@
 					<archive>
 						<manifestFile>${project.basedir}/src/META-INF/MANIFEST.MF</manifestFile>
 					</archive>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>exec-maven-plugin</artifactId>
+				<version>1.2.1</version>
+				<configuration>
+					<mainClass>audicon.AudiconStart</mainClass>
 				</configuration>
 			</plugin>
 		</plugins>

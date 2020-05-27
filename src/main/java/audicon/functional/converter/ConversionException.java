@@ -1,4 +1,4 @@
-package audicon.db.functional.converter;
+package audicon.functional.converter;
 
 public class ConversionException extends RuntimeException {
 

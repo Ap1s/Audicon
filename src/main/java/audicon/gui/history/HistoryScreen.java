@@ -25,9 +25,9 @@ public class HistoryScreen extends MainScreen {
 	private JScrollPane historyTable;
 	private JPanel bottomPanel;
 	private JTable userHistory;
-	
+
 	private User user;
-	
+
 	private HistoryScreen screen;
 
 	public HistoryScreen(final User user) {
@@ -48,15 +48,15 @@ public class HistoryScreen extends MainScreen {
 		headPanel.add(headline);
 		add(headPanel);
 	}
-	
+
 	private void assembleHistoryTable() {
-		String[] columns = {"title", "artist", "length"};
+		String[] columns = { "title", "artist", "length" };
 		String[][] data = fillHistory();
 		userHistory = new JTable(data, columns);
 		historyTable = new JScrollPane(userHistory);
 		add(historyTable);
 	}
-	
+
 	private void assembleBottomPanel() {
 		bottomPanel = new JPanel();
 		JButton backButton = new JButton("Back to dashboard");
@@ -64,22 +64,20 @@ public class HistoryScreen extends MainScreen {
 		bottomPanel.add(backButton);
 		add(bottomPanel);
 	}
-	
+
 	private String[][] fillHistory() {
 		List<TrackEntity> historyEntriesDB = new HistoryManager().getTrackHistoryByUsername(user.getId());
 		int size = historyEntriesDB.size();
 		String users[][] = new String[size][];
-		
-		for(int i = 0; i < size; i++) {
-			for(TrackEntity entity : historyEntriesDB) {
-				String[] userArr = new String[] {entity.getTitle(), entity.getArtist(), entity.getLength()};
-				users[i] = userArr;
-				System.out.println(entity.getTitle());
-			}
+
+		for (int i = 0; i < size; i++) {
+			TrackEntity entity = historyEntriesDB.get(i);
+			String[] userArr = new String[] { entity.getTitle(), entity.getArtist(), entity.getLength() };
+			users[i] = userArr;
 		}
 		return users;
 	}
-	
+
 	class BackButtonListener implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent e) {

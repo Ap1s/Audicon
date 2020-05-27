@@ -8,7 +8,7 @@ public class ConversionConfirmPanel extends JOptionPane {
 		String message = "<html><h1>Process finished successfully</h2>"
 				+ "<p>Please find your file here</p>"
 				+ "<b>" + path + "</b></html>";
-		showConfirmDialog(null, message);
+		showMessageDialog(null, message);
 	}
 
 }

@@ -1,20 +1,31 @@
-package audicon.db.functional.converter;
+package audicon.functional.converter;
+
+import static audicon.functional.converter.Converter.convertFrom;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+
 import javax.sound.sampled.AudioFileFormat.Type;
+import javax.sound.sampled.AudioFileFormat;
 import javax.sound.sampled.AudioFormat;
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.UnsupportedAudioFileException;
 
 public final class Converter {
 
 	private InputStream input;
 	private AudioFormat audioFormat;
 	private boolean close;
+	
+	public Converter() {
+
+	}
 
 	public Converter(InputStream input) {
 		this(input, false);
@@ -33,6 +44,26 @@ public final class Converter {
 		return new Converter(new ByteArrayInputStream(mp3Content), true);
 	}
 
+	public void convertToMp3() throws IOException, UnsupportedAudioFileException {
+		try (
+				final InputStream inputStream = getClass().getResourceAsStream("/test.wav");
+				final ByteArrayOutputStream output = new ByteArrayOutputStream();
+		) {
+			final AudioFormat audioFormat = new AudioFormat(44100, 8, 1, false, false);
+
+			convertFrom(inputStream).withTargetFormat(audioFormat).to(output);
+
+			final byte[] wavContent = output.toByteArray();
+
+			final AudioFileFormat actualFileFormat = AudioSystem
+					.getAudioFileFormat(new ByteArrayInputStream(wavContent));
+
+			Files.write(Paths.get("C://Users/" + System.getenv("USERNAME") + "/Desktop/result.mp3"), wavContent);
+		} finally {
+			// intentionally left blank
+		}
+	}
+	
 	public Converter withTargetFormat(AudioFormat targetAudioFormat) {
 		this.audioFormat = targetAudioFormat;
 		return this;

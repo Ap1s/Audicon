@@ -9,20 +9,24 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 import java.io.File;
-import java.util.logging.Logger;
+import java.io.IOException;
 
+import javax.sound.sampled.UnsupportedAudioFileException;
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
+import audicon.db.manager.HistoryManager;
+import audicon.functional.bo.Track;
 import audicon.functional.bo.User;
+import audicon.functional.converter.Converter;
+import audicon.functional.extractor.MetaDataExtractor;
 import audicon.gui.baseScreens.MainScreen;
-import audicon.gui.conversion.ConversionProcessScreen;
 import audicon.gui.history.HistoryScreen;
+import audicon.gui.baseScreens.*;
 
 public class DashboardScreen extends MainScreen {
 
@@ -112,7 +116,13 @@ public class DashboardScreen extends MainScreen {
 		@Override
 		public void mouseClicked(MouseEvent e) {
 			switch(clickedAction) {
-			case ACTION_CONVERT: openConversionFLow(); break;
+			case ACTION_CONVERT:
+				try {
+					openConversionFLow();
+				} catch (IOException | UnsupportedAudioFileException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				} break;
 			case ACTION_SEE_HISTORY: openHistoryPage(); break;
 			case ACTION_ABOUT: showAboutDialog(); break;
 			default: System.err.println("No valid action was choosen");
@@ -124,20 +134,41 @@ public class DashboardScreen extends MainScreen {
 			new HistoryScreen(user);
 		}
 
-		private void openConversionFLow() {
+		private void openConversionFLow() throws IOException, UnsupportedAudioFileException {
 			JFileChooser fileChooser = new JFileChooser();
 			int returnVal = fileChooser.showOpenDialog(screen);
 			if(returnVal == JFileChooser.APPROVE_OPTION) {
-				File file = fileChooser.getSelectedFile();
-				new ConversionProcessScreen(file.getAbsolutePath());
+				
+				//convert file to MP3
+				Converter converter = new Converter();
+				converter.convertToMp3();
+				
+				File mp3file = new File("C://Users/Desktop/result.mp3");
+				
+				// extract meta data
+//				String title = MetaDataExtractor.getTrackMetaDataFromByteArray(mp3file).getTitle();
+//				String artist = MetaDataExtractor.getTrackMetaDataFromByteArray(mp3file).getArtist();
+//				String length = "123";
+				
+				String title = "test";
+				String artist = "testArtist";
+				String length = "123";
+				
+				//write into user history
+				Track track = new Track(title, artist, length);
+				HistoryManager historyManager = new HistoryManager();
+				historyManager.saveHistoryEntry(user.getId(), track);
+				
+				// give user feedback
+				ConversionConfirmPanel.showDialog("C://Users/"+ System.getenv("USERNAME"));
 			}
 		}
 
 		private void showAboutDialog() {
 			String message = 
 				"<html><h1>AudiCon v1.0.0</h1>" +
-				"<h2>This tool is used to transform MP3 files into WAV</h2>" +
-				"<h3>Mady by Markus Schiller</h3></html>";
+				"<h2>This tool is used to transform WAV files into MO3</h2>" +
+				"<h3>Made by Markus Schiller</h3></html>";
 			JOptionPane.showMessageDialog(null, message);
 		}
 	}
@@ -148,6 +179,5 @@ public class DashboardScreen extends MainScreen {
 		public void actionPerformed(ActionEvent e) {
 			screen.dispose();
 		}
-		
 	}
 }
