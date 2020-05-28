@@ -35,6 +35,7 @@ public class HistoryManager extends BaseDBManager {
 		trackEntity.setTitle(track.getTitle());
 		trackEntity.setArtist(track.getArtist());
 		trackEntity.setLength(track.getLength());
+		trackEntity.setConversionDate(track.getConversionDate());
 		trackEntity.setUser_id(user_id);
 		
 		Session session = sessionFactory.openSession();

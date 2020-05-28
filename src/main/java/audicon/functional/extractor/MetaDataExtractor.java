@@ -22,7 +22,7 @@ public class MetaDataExtractor {
 			String artist = getMetaData(arr, 33, 62);
 			String length = "";
 			
-			return new Track(title, artist, length);
+			return new Track(title, artist, length, null);
 		
 		} catch (IOException e) {
 			e.printStackTrace();

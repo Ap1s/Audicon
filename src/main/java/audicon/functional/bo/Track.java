@@ -4,13 +4,15 @@ public class Track {
 	private String title;
 	private String artist;
 	private String length;
+	private String conversionDate;
 	
  
-	public Track(String title, String artist, String length) {
+	public Track(String title, String artist, String length, String date) {
 		super();
 		this.title = title;
 		this.artist = artist;
 		this.length = length;
+		this.conversionDate = date;
 	}
 
 	public String getTitle() {
@@ -36,4 +38,14 @@ public class Track {
 	public void setLength(String length) {
 		this.length = length;
 	}
+
+	public String getConversionDate() {
+		return conversionDate;
+	}
+
+	public void setConversionDate(String conversionDate) {
+		this.conversionDate = conversionDate;
+	}
+	
+	
 }

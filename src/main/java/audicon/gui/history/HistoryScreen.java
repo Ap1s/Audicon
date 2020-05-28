@@ -50,7 +50,7 @@ public class HistoryScreen extends MainScreen {
 	}
 
 	private void assembleHistoryTable() {
-		String[] columns = { "title", "artist", "length" };
+		String[] columns = { "title", "artist", "length", "date" };
 		String[][] data = fillHistory();
 		userHistory = new JTable(data, columns);
 		historyTable = new JScrollPane(userHistory);
@@ -72,7 +72,7 @@ public class HistoryScreen extends MainScreen {
 
 		for (int i = 0; i < size; i++) {
 			TrackEntity entity = historyEntriesDB.get(i);
-			String[] userArr = new String[] { entity.getTitle(), entity.getArtist(), entity.getLength() };
+			String[] userArr = new String[] { entity.getTitle(), entity.getArtist(), entity.getLength(), entity.getConversionDate() };
 			users[i] = userArr;
 		}
 		return users;

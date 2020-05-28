@@ -10,7 +10,10 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import javax.sound.sampled.UnsupportedAudioFileException;
 import javax.swing.JButton;
@@ -116,13 +119,7 @@ public class DashboardScreen extends MainScreen {
 		@Override
 		public void mouseClicked(MouseEvent e) {
 			switch(clickedAction) {
-			case ACTION_CONVERT:
-				try {
-					openConversionFLow();
-				} catch (IOException | UnsupportedAudioFileException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				} break;
+			case ACTION_CONVERT:openConversionFLow(); break;
 			case ACTION_SEE_HISTORY: openHistoryPage(); break;
 			case ACTION_ABOUT: showAboutDialog(); break;
 			default: System.err.println("No valid action was choosen");
@@ -134,33 +131,43 @@ public class DashboardScreen extends MainScreen {
 			new HistoryScreen(user);
 		}
 
-		private void openConversionFLow() throws IOException, UnsupportedAudioFileException {
+		private void openConversionFLow()  {
 			JFileChooser fileChooser = new JFileChooser();
 			int returnVal = fileChooser.showOpenDialog(screen);
 			if(returnVal == JFileChooser.APPROVE_OPTION) {
 				
+				File mp3file = fileChooser.getSelectedFile(); 
 				//convert file to MP3
 				Converter converter = new Converter();
-				converter.convertToMp3();
-				
-				File mp3file = new File("C://Users/Desktop/result.mp3");
-				
-				// extract meta data
-//				String title = MetaDataExtractor.getTrackMetaDataFromByteArray(mp3file).getTitle();
-//				String artist = MetaDataExtractor.getTrackMetaDataFromByteArray(mp3file).getArtist();
-//				String length = "123";
-				
-				String title = "test";
-				String artist = "testArtist";
-				String length = "123";
-				
-				//write into user history
-				Track track = new Track(title, artist, length);
-				HistoryManager historyManager = new HistoryManager();
-				historyManager.saveHistoryEntry(user.getId(), track);
-				
-				// give user feedback
-				ConversionConfirmPanel.showDialog("C://Users/"+ System.getenv("USERNAME"));
+				try {
+					converter.convertToMp3(new FileInputStream(mp3file));
+					
+					// extract meta data
+//					String title = MetaDataExtractor.getTrackMetaDataFromByteArray(mp3file).getTitle();
+//					String artist = MetaDataExtractor.getTrackMetaDataFromByteArray(mp3file).getArtist();
+//					String length = "123";
+					
+					String title = "test";
+					String artist = "testArtist";
+					String length = "123";
+					
+					//write into user history
+					Date date = new Date();
+					SimpleDateFormat DateFor = new SimpleDateFormat("yyyy-MM-dd");
+					String stringDate= DateFor.format(date);
+					
+					Track track = new Track(title, artist, length, stringDate);
+					
+					HistoryManager historyManager = new HistoryManager();
+					historyManager.saveHistoryEntry(user.getId(), track);
+					
+					// give user feedback
+					ConversionConfirmPanel.showSuccessDialog("C://Users/"+ System.getenv("USERNAME") + "/Desktop/");
+				} catch (IOException | UnsupportedAudioFileException e) {
+					// send error message to user
+					ConversionConfirmPanel.showFailureDialog();
+					e.printStackTrace();
+				}
 			}
 		}
 

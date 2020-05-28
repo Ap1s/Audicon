@@ -2,6 +2,7 @@ package audicon.functional.converter;
 
 import static audicon.functional.converter.Converter.convertFrom;
 
+import java.io.BufferedInputStream;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -44,9 +45,10 @@ public final class Converter {
 		return new Converter(new ByteArrayInputStream(mp3Content), true);
 	}
 
-	public void convertToMp3() throws IOException, UnsupportedAudioFileException {
+	public void convertToMp3(final InputStream inStream) throws IOException, UnsupportedAudioFileException {
 		try (
-				final InputStream inputStream = getClass().getResourceAsStream("/test.wav");
+				final InputStream inputStream = new BufferedInputStream(inStream);
+				//getClass().getResourceAsStream("/test.wav");
 				final ByteArrayOutputStream output = new ByteArrayOutputStream();
 		) {
 			final AudioFormat audioFormat = new AudioFormat(44100, 8, 1, false, false);

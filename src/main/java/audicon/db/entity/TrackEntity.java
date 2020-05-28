@@ -22,6 +22,7 @@ public class TrackEntity {
 	private String title;
 	private String artist;
 	private String length;
+	private String conversionDate;
 	
 	public TrackEntity() {
 	}
@@ -67,6 +68,14 @@ public class TrackEntity {
 
 	public void setLength(String length) {
 		this.length = length;
+	}
+
+	public String getConversionDate() {
+		return conversionDate;
+	}
+
+	public void setConversionDate(String conversionDate) {
+		this.conversionDate = conversionDate;
 	}
 	
 	
