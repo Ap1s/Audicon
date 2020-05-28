@@ -13,6 +13,7 @@ import javax.swing.JTextField;
 
 import audicon.db.manager.RegisterManager;
 import audicon.functional.bo.User;
+import audicon.functional.security.AES;
 import audicon.functional.validator.RegisterValidator;
 
 public class RegisterForm extends JPanel {
@@ -79,8 +80,14 @@ public class RegisterForm extends JPanel {
 				case -3:
 					message = "Your entered password do not match";
 				default: {
+					
+					// encryption goes here
+					final String secretKey = "schillaui";
+				    String encryptedString = AES.encrypt(pw_retpyed, secretKey) ;
+				    
+				    // now save user entry
 					RegisterManager registerManager = new RegisterManager();
-					User user = new User(username, password);
+					User user = new User(username, encryptedString);
 					registerManager.insert(user);
 					message = "Your account was created";
 				}

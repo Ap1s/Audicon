@@ -2,6 +2,7 @@ package audicon.db.manager;
 
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 
 import org.hibernate.Session;
@@ -21,7 +22,13 @@ public class LoginManager extends BaseDBManager {
 		CriteriaBuilder cb = session.getCriteriaBuilder();
 		CriteriaQuery<UserEntity> cr = cb.createQuery(UserEntity.class);
 		Root<UserEntity> root = cr.from(UserEntity.class);
-		cr.select(root).where(cb.like(root.get("username"), username));
+		
+		Predicate usernamePredicate = cb.like(root.get("username"), username);
+		Predicate passwordPredicate = cb.like(root.get("password"), password);
+		
+		Predicate finalPredicate = cb.and(usernamePredicate, passwordPredicate);
+		
+		cr.select(root).where(finalPredicate);
 		
 		try {
 			int id = session.createQuery(cr).getResultList().get(0).getId();

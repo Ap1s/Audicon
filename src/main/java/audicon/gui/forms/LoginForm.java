@@ -14,6 +14,7 @@ import javax.swing.JTextField;
 import audicon.db.entity.UserEntity;
 import audicon.db.manager.LoginManager;
 import audicon.functional.bo.User;
+import audicon.functional.security.AES;
 import audicon.gui.dashboard.DashboardScreen;
 
 public class LoginForm extends JPanel {
@@ -62,7 +63,11 @@ public class LoginForm extends JPanel {
 			
 			String username = usernameInput.getText();
 			String password = new String(passwordInput.getPassword());
-			UserEntity validationResult = loginManager.login(username, password);
+			
+			final String secretKey = "schillaui";
+		    String encryptedString = AES.encrypt(password, secretKey);
+		    
+			UserEntity validationResult = loginManager.login(username, encryptedString);
 			
 			
 			if(validationResult != null) {
