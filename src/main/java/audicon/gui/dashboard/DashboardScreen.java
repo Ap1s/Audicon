@@ -182,7 +182,7 @@ public class DashboardScreen extends MainScreen {
 		private void showAboutDialog() {
 			String message = 
 				"<html><h1>AudiCon v1.0.0</h1>" +
-				"<h2>This tool is used to transform WAV files into MO3</h2>" +
+				"<h2>This tool is used to transform WAV files into MP3</h2>" +
 				"<h3>Made by Markus Schiller</h3></html>";
 			JOptionPane.showMessageDialog(null, message);
 		}
