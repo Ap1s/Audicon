@@ -14,6 +14,8 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.sound.sampled.UnsupportedAudioFileException;
 import javax.swing.JButton;
@@ -137,37 +139,43 @@ public class DashboardScreen extends MainScreen {
 			if(returnVal == JFileChooser.APPROVE_OPTION) {
 				
 				File mp3file = fileChooser.getSelectedFile(); 
-				//convert file to MP3
-				Converter converter = new Converter();
-				try {
-					converter.convertToMp3(new FileInputStream(mp3file));
-					
-					// extract meta data
-//					String title = MetaDataExtractor.getTrackMetaDataFromByteArray(mp3file).getTitle();
-//					String artist = MetaDataExtractor.getTrackMetaDataFromByteArray(mp3file).getArtist();
-//					String length = "123";
-					
-					String title = "test";
-					String artist = "testArtist";
-					String length = "123";
-					
-					//write into user history
-					Date date = new Date();
-					SimpleDateFormat DateFor = new SimpleDateFormat("yyyy-MM-dd");
-					String stringDate= DateFor.format(date);
-					
-					Track track = new Track(title, artist, length, stringDate);
-					
-					HistoryManager historyManager = new HistoryManager();
-					historyManager.saveHistoryEntry(user.getId(), track);
-					
-					// give user feedback
-					ConversionConfirmPanel.showSuccessDialog("C://Users/"+ System.getenv("USERNAME") + "/Desktop/");
-				} catch (IOException | UnsupportedAudioFileException e) {
-					// send error message to user
-					ConversionConfirmPanel.showFailureDialog();
-					e.printStackTrace();
-				}
+				String filename = mp3file.getName();
+		        Pattern pattern = Pattern.compile("\\w*-\\w*.wav");
+		        Matcher matcher = pattern.matcher(filename);
+		        
+		        if(matcher.matches()) {
+					//convert file to MP3
+					Converter converter = new Converter();
+					try {
+						converter.convertToMp3(new FileInputStream(mp3file));
+						
+
+						
+						String artist = filename.split("-")[0];
+						String title = filename.split("\\w*-")[1].split(".wav")[0];
+						String length = "123";
+						
+						//write into user history
+						Date date = new Date();
+						SimpleDateFormat DateFor = new SimpleDateFormat("yyyy-MM-dd");
+						String stringDate= DateFor.format(date);
+						
+						Track track = new Track(title, artist, length, stringDate);
+						
+						HistoryManager historyManager = new HistoryManager();
+						historyManager.saveHistoryEntry(user.getId(), track);
+						
+						// give user feedback
+						ConversionConfirmPanel.showSuccessDialog("C://Users/"+ System.getenv("USERNAME") + "/Desktop/");
+					} catch (IOException | UnsupportedAudioFileException e) {
+						// send error message to user
+						ConversionConfirmPanel.showFailureDialog();
+						e.printStackTrace();
+					}
+		        }
+		        else {
+		        	JOptionPane.showMessageDialog(null, "<html><h1>Please provide a file named</h1><h2>{artist}-{title}.mp3");
+		        }
 			}
 		}
 
