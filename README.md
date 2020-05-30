@@ -28,5 +28,3 @@ Build your run configuration with the maven goal: clean install java:exec -e -U
 * https://stackoverflow.com/questions/10824027/get-the-metadata-of-a-file
 
 ( Kommen aber aus Gründen der Einfachheit und Aufgabenstellung in diesem Programm nicht zur Anwendung ) 
-
-teeeeeeeeeeeest
