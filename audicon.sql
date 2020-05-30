@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Erstellungszeit: 16. Mai 2020 um 22:50
+-- Erstellungszeit: 30. Mai 2020 um 02:20
 -- Server-Version: 10.4.11-MariaDB
 -- PHP-Version: 7.4.5
 
@@ -32,16 +32,22 @@ CREATE TABLE `track` (
   `user_id` int(11) NOT NULL,
   `title` varchar(100) NOT NULL,
   `artist` varchar(100) NOT NULL,
-  `length` int(11) NOT NULL
+  `length` int(11) NOT NULL,
+  `conversionDate` date NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Daten für Tabelle `track`
 --
 
-INSERT INTO `track` (`id`, `user_id`, `title`, `artist`, `length`) VALUES
-(1, 1, 'asd', 'asd', 345),
-(2, 1, 'hgtrhtrhtrh', 'rthrthsfghdgf', 123);
+INSERT INTO `track` (`id`, `user_id`, `title`, `artist`, `length`, `conversionDate`) VALUES
+(1, 1, 'test', 'testArtist', 123, '2020-05-28'),
+(2, 1, 'test', 'testArtist', 123, '2020-05-28'),
+(3, 2, 'test', 'testArtist', 123, '2020-05-28'),
+(4, 2, 'test.wav', '', 123, '2020-05-28'),
+(5, 2, 'test', '', 123, '2020-05-29'),
+(6, 2, 'test', 'test', 123, '2020-05-29'),
+(7, 3, 'test', 'test', 123, '2020-05-29');
 
 -- --------------------------------------------------------
 
@@ -60,7 +66,9 @@ CREATE TABLE `user` (
 --
 
 INSERT INTO `user` (`id`, `username`, `password`) VALUES
-(1, 'neo', '123123123');
+(1, 'neo', '123123123'),
+(2, 'test', 'FyQ3TdyYyzgIQEj7pw947A=='),
+(3, 'test123', 'FyQ3TdyYyzgIQEj7pw947A==');
 
 --
 -- Indizes der exportierten Tabellen
@@ -86,13 +94,13 @@ ALTER TABLE `user`
 -- AUTO_INCREMENT für Tabelle `track`
 --
 ALTER TABLE `track`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT für Tabelle `user`
 --
 ALTER TABLE `user`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

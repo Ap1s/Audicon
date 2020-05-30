@@ -174,7 +174,7 @@ public class DashboardScreen extends MainScreen {
 					}
 		        }
 		        else {
-		        	JOptionPane.showMessageDialog(null, "<html><h1>Please provide a file named</h1><h2>{artist}-{title}.mp3");
+		        	JOptionPane.showMessageDialog(null, "<html><h1>Please provide a file named</h1><h2>{artist}-{title}.wav");
 		        }
 			}
 		}
