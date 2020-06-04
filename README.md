@@ -14,25 +14,46 @@ Build your run configuration with the maven goal: clean install java:exec -e -U
 * Java JDK 14.0.1
 * Java JRE (build 1.8.0_251-b08)
 * DB: mariaDB root@localhost / PW: localhost
+* Application-type: Fat-Client
+* Used languages: Java, SQL, XML, HTML
+* Buildmanagament: Maven
+* Object-Relational-Mapper: Hibernate
+* GUI-Library: Swing / AWT
+* Operating-Systems: Linux , MacOS, Windows, *
+
 
 ## Architektur
 
 ### DB-Layer ( audicon.db.*)
+<<<<<<< HEAD
 * Enthält Entitäten und Datenbank Manager Klassen, die für die Verbindung zur Datenbank zuständig sind
 * JPA: Java Persistency API : Eine API zum persistieren ( dauerhaft speichern ) von Entitäten
 * Hibernate Framework als Implementierung der JPA.
 * Konfiguration sind zu finden in /src/main/resources/hibernate.cfg.xml
+=======
+* EnthÃ¤lt EntitÃ¤ten und Datenbank Manager Klassen, die fÃ¼r die Verbindung zur Datenbank zustÃ¤ndig sind
+>>>>>>> branch 'master' of https://github.com/neo4share/audicon.git
 
 ### Functional-Layer ( audicon.functional.* )
-* Enhält Klassen, die die Hauptfunktionalität des Programms abbilden. Zum Beispiel AES Encryption / Decryption, Convertierung oder Validierung des User Inputs
+* EnhÃ¤lt Klassen, die die HauptfunktionalitÃ¤t des Programms abbilden. Zum Beispiel AES Encryption / Decryption, Convertierung oder Validierung des User Inputs
 
 ### GUI Layer ( audicon.gui.* ) 
+<<<<<<< HEAD
 * Enthält Klassen, die die Fenster / Frames und die Formulare enhalten und zur grafischen Benutzerinteraktion dienen
 * Formulare sind von ihren Fenstern technisch getrennt
+=======
+* EnthÃ¤lt Klassen, die die Fenster / Frames und die Formulare enhalten und zur grafischen Benutzerinteraktion dienen
+>>>>>>> branch 'master' of https://github.com/neo4share/audicon.git
 
 ## Weitere Informationen 
-* Nützliche Informationen zur Extraktion von Meta Daten aus einem MP3 File: 
+* NÃ¼tzliche Informationen zur Extraktion von Meta Daten aus einem MP3 File: 
 * https://stackoverflow.com/questions/1645803/how-to-read-mp3-file-tags
 * https://stackoverflow.com/questions/10824027/get-the-metadata-of-a-file
 
+<<<<<<< HEAD
 ( Kommen aber aus Gründen der Einfachheit und Aufgabenstellung in diesem Programm nicht zur Anwendung ) 
+=======
+( Kommen aber aus GrÃ¼nden der Einfachheit und Aufgabenstellung in diesem Programm nicht zur Anwendung ) 
+
+
+>>>>>>> branch 'master' of https://github.com/neo4share/audicon.git
