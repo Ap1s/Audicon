@@ -1,8 +1,10 @@
 package audicon.gui.baseScreens;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.LayoutManager;
 
+import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -10,8 +12,8 @@ import javax.swing.JPanel;
 
 public class SmallScreen extends JFrame {
 
-	private JPanel topPanel;
-	private JPanel bottomPanel;
+	protected JPanel topPanel;
+	protected JPanel bottomPanel;
 	
 	private JPanel rightBottomPanel;
 	private JPanel leftBottomPanel;

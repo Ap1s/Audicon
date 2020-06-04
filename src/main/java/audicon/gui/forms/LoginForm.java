@@ -1,11 +1,13 @@
 package audicon.gui.forms;
 
+import java.awt.Color;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
+import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -18,7 +20,9 @@ import audicon.db.manager.LoginManager;
 import audicon.functional.bo.User;
 import audicon.functional.security.AES;
 import audicon.gui.dashboard.DashboardScreen;
+import audicon.gui.forms.RegisterForm.ButtonListener;
 import audicon.gui.login.*;
+import audicon.gui.welcome.*;
 
 public class LoginForm extends JPanel {
 	private JLabel usernameLabel;
@@ -29,11 +33,12 @@ public class LoginForm extends JPanel {
 	
 	private JButton sendButton;
 	private LoginScreen screen;
+	private JButton backButton;
 	
-	public LoginForm(final LoginScreen screen) {
+	public LoginForm(final LoginScreen loginScreen) {
 		initForm();
 		assembleForm();
-		this.screen = screen;
+		this.screen = loginScreen;
 	}
 	
 	public void initForm() {
@@ -44,11 +49,14 @@ public class LoginForm extends JPanel {
 		passwordInput = new JPasswordField();
 		
 		sendButton = new JButton("Send");
+		
+		backButton = new JButton("Back");
+		backButton.addActionListener(new ButtonListener());
 	}
 	
 	
 	private void assembleForm() {
-		this.setSize(300,400);
+		this.setSize(300,200);
 		this.setLayout(new GridLayout(5,1));
 		
 		this.add(usernameLabel);
@@ -56,14 +64,22 @@ public class LoginForm extends JPanel {
 		this.add(passwordLabel);
 		this.add(passwordInput);
 		
-		sendButton.addActionListener(new SendButtonListener());
+		sendButton.addActionListener(new ButtonListener());
+		backButton.addActionListener(new ButtonListener());
 		this.add(sendButton);
+		this.add(backButton);
 	}
 	
-	class SendButtonListener implements ActionListener, KeyListener {
+	class ButtonListener implements ActionListener, KeyListener {
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			login();
+			if(e.getActionCommand().equals("Send")) {
+				login();
+			}
+			else {
+				screen.dispose();
+				new WelcomeScreen();
+			}
 		}
 
 		@Override
