@@ -8,7 +8,6 @@ public class AudiconStart {
 
 	public static void main(String[] args) {
 		new WelcomeScreen();
-		//new DashboardScreen();
 	}
 
 }

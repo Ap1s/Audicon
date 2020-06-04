@@ -3,6 +3,8 @@ package audicon.gui.forms;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -16,6 +18,7 @@ import audicon.db.manager.LoginManager;
 import audicon.functional.bo.User;
 import audicon.functional.security.AES;
 import audicon.gui.dashboard.DashboardScreen;
+import audicon.gui.login.*;
 
 public class LoginForm extends JPanel {
 	private JLabel usernameLabel;
@@ -25,12 +28,12 @@ public class LoginForm extends JPanel {
 	private JPasswordField passwordInput;
 	
 	private JButton sendButton;
-	private LoginForm screen;
+	private LoginScreen screen;
 	
-	public LoginForm() {
+	public LoginForm(final LoginScreen screen) {
 		initForm();
 		assembleForm();
-		screen = this;
+		this.screen = screen;
 	}
 	
 	public void initForm() {
@@ -42,6 +45,7 @@ public class LoginForm extends JPanel {
 		
 		sendButton = new JButton("Send");
 	}
+	
 	
 	private void assembleForm() {
 		this.setSize(300,400);
@@ -56,27 +60,49 @@ public class LoginForm extends JPanel {
 		this.add(sendButton);
 	}
 	
-	class SendButtonListener implements ActionListener {
+	class SendButtonListener implements ActionListener, KeyListener {
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			LoginManager loginManager = new LoginManager();
+			login();
+		}
+
+		@Override
+		public void keyTyped(KeyEvent e) {
+			// TODO Auto-generated method stub
 			
-			String username = usernameInput.getText();
-			String password = new String(passwordInput.getPassword());
+		}
+
+		@Override
+		public void keyPressed(KeyEvent e) {
+		    if (e.getKeyCode()==KeyEvent.VK_ENTER){
+		        login();
+		    }
+		}
+
+		@Override
+		public void keyReleased(KeyEvent e) {
+			// TODO Auto-generated method stub
 			
-			final String secretKey = "schillaui";
-		    String encryptedString = AES.encrypt(password, secretKey);
-		    
-			UserEntity validationResult = loginManager.login(username, encryptedString);
-			
-			
-			if(validationResult != null) {
-				new DashboardScreen(new User(validationResult.getId(), validationResult.getUsername()));
-			}
-			else {
-				JOptionPane.showMessageDialog(null, "<html><h1>Username or password is wrong.</h1><p>Please try again</p></html>");
-			}
 		}
 	}
-
+	
+	private void login() {
+		LoginManager loginManager = new LoginManager();
+		
+		String username = usernameInput.getText();
+		String password = new String(passwordInput.getPassword());
+		
+	    String encryptedString = AES.encrypt(password.getBytes());
+	    
+		UserEntity validationResult = loginManager.login(username, encryptedString);
+		
+		
+		if(validationResult != null) {
+			screen.dispose();
+			new DashboardScreen(new User(validationResult.getId(), validationResult.getUsername()));
+		}
+		else {
+			JOptionPane.showMessageDialog(null, "<html><h1>Username or password is wrong.</h1><p>Please try again</p></html>");
+		}
+	}
 }

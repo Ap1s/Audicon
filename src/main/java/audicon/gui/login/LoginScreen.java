@@ -8,7 +8,7 @@ import audicon.gui.forms.LoginForm;
 public class LoginScreen extends SmallScreen {
 	public LoginScreen() {
 		super("Login");
-		this.add(new LoginForm());
+		this.add(new LoginForm(this));
 		setVisible(true);
 	}
 }

@@ -15,6 +15,8 @@ import audicon.db.manager.RegisterManager;
 import audicon.functional.bo.User;
 import audicon.functional.security.AES;
 import audicon.functional.validator.RegisterValidator;
+import audicon.gui.register.RegisterScreen;
+import audicon.gui.welcome.*;
 
 public class RegisterForm extends JPanel {
 
@@ -28,8 +30,12 @@ public class RegisterForm extends JPanel {
 	private JPasswordField passwordretypedInput;
 
 	private JButton sendButton;
+	private JButton backButton;
+	
+	private RegisterScreen screen;
 
-	public RegisterForm() {
+	public RegisterForm(final RegisterScreen screen) {
+		this.screen = screen;
 		initForm();
 		assembleForm();
 	}
@@ -45,7 +51,10 @@ public class RegisterForm extends JPanel {
 		passwordretypedInput = new JPasswordField();
 
 		sendButton = new JButton("Send");
-		sendButton.addActionListener(new SendButtonListener());
+		sendButton.addActionListener(new ButtonListener());
+
+		backButton = new JButton("Back");
+		backButton.addActionListener(new ButtonListener());
 	}
 
 	private void assembleForm() {
@@ -59,43 +68,47 @@ public class RegisterForm extends JPanel {
 		this.add(passwordretypedInput);
 
 		this.add(sendButton);
+		this.add(backButton);
 	}
 
-	class SendButtonListener implements ActionListener {
+	class ButtonListener implements ActionListener {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			String username = usernameInput.getText();
-			String password = new String(passwordInput.getPassword());
-			String pw_retpyed = new String(passwordretypedInput.getPassword());
+			if (e.getActionCommand().equals("Send")) {
+				String username = usernameInput.getText();
+				String password = new String(passwordInput.getPassword());
+				String pw_retpyed = new String(passwordretypedInput.getPassword());
 
-			int validationResult = RegisterValidator.validateRegistration(username, password, pw_retpyed);
-			String message = null;
+				int validationResult = RegisterValidator.validateRegistration(username, password, pw_retpyed);
+				String message = null;
 
-			switch (validationResult) {
-				case -1:
-					message = "Your username can be only have 50 characters!";
-				case -2:
-					message = "Your password should have at least 8 characters";
-				case -3:
-					message = "Your entered password do not match";
-				default: {
-					
-					// encryption goes here
-					final String secretKey = "schillaui";
-				    String encryptedString = AES.encrypt(pw_retpyed, secretKey) ;
-				    
-				    // now save user entry
-					RegisterManager registerManager = new RegisterManager();
-					User user = new User(username, encryptedString);
-					registerManager.insert(user);
-					message = "Your account was created";
+				switch (validationResult) {
+					case -1:
+						message = "Your username can be only have 50 characters!"; break;
+					case -2:
+						message = "Your password should have at least 8 characters"; break;
+					case -3:
+						message = "Your entered password do not match"; break;
+					default: {
+	
+						// encryption goes here
+						String encryptedString = AES.encrypt(pw_retpyed.getBytes());
+	
+						// now save user entry
+						RegisterManager registerManager = new RegisterManager();
+						User user = new User(username, encryptedString);
+						registerManager.insert(user);
+						message = "Your account was created";
+					}
 				}
+
+				JOptionPane.showMessageDialog(null, message);
+
+			} else {
+				screen.dispose();
+				new WelcomeScreen();
 			}
-
-			JOptionPane.showMessageDialog(null, message);
 		}
-
 	}
-
 }

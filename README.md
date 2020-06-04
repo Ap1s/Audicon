@@ -2,6 +2,10 @@
 Tool for conversion of media files
 
 ## Build information
+Maven Build management. 
+Via Maven werden zur Laufzeit des Programms über das lokale Maven Repository die Abhängigkeiten zu Hibernate und Mysql geladen und anschließend zu einer JAR kompiliert. 
+
+__Zusätzliche Informationen__ : 
 Build your run configuration with the maven goal: clean install java:exec -e -U
 
 ## Environment
@@ -15,12 +19,16 @@ Build your run configuration with the maven goal: clean install java:exec -e -U
 
 ### DB-Layer ( audicon.db.*)
 * Enthält Entitäten und Datenbank Manager Klassen, die für die Verbindung zur Datenbank zuständig sind
+* JPA: Java Persistency API : Eine API zum persistieren ( dauerhaft speichern ) von Entitäten
+* Hibernate Framework als Implementierung der JPA.
+* Konfiguration sind zu finden in /src/main/resources/hibernate.cfg.xml
 
 ### Functional-Layer ( audicon.functional.* )
 * Enhält Klassen, die die Hauptfunktionalität des Programms abbilden. Zum Beispiel AES Encryption / Decryption, Convertierung oder Validierung des User Inputs
 
 ### GUI Layer ( audicon.gui.* ) 
 * Enthält Klassen, die die Fenster / Frames und die Formulare enhalten und zur grafischen Benutzerinteraktion dienen
+* Formulare sind von ihren Fenstern technisch getrennt
 
 ## Weitere Informationen 
 * Nützliche Informationen zur Extraktion von Meta Daten aus einem MP3 File: 

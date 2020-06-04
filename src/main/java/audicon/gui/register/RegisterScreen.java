@@ -8,7 +8,7 @@ import audicon.gui.forms.RegisterForm;
 public class RegisterScreen extends SmallScreen {
 	public RegisterScreen() {
 		super("Registration");
-		this.add(new RegisterForm());
+		this.add(new RegisterForm(this));
 		setVisible(true);
 	}
 }
