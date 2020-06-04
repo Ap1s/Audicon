@@ -25,35 +25,23 @@ Build your run configuration with the maven goal: clean install java:exec -e -U
 ## Architektur
 
 ### DB-Layer ( audicon.db.*)
-<<<<<<< HEAD
 * Enth‰lt Entit‰ten und Datenbank Manager Klassen, die f¸r die Verbindung zur Datenbank zust‰ndig sind
 * JPA: Java Persistency API : Eine API zum persistieren ( dauerhaft speichern ) von Entit‰ten
 * Hibernate Framework als Implementierung der JPA.
 * Konfiguration sind zu finden in /src/main/resources/hibernate.cfg.xml
-=======
-* Enth√§lt Entit√§ten und Datenbank Manager Klassen, die f√ºr die Verbindung zur Datenbank zust√§ndig sind
->>>>>>> branch 'master' of https://github.com/neo4share/audicon.git
+
 
 ### Functional-Layer ( audicon.functional.* )
 * Enh√§lt Klassen, die die Hauptfunktionalit√§t des Programms abbilden. Zum Beispiel AES Encryption / Decryption, Convertierung oder Validierung des User Inputs
 
 ### GUI Layer ( audicon.gui.* ) 
-<<<<<<< HEAD
 * Enth‰lt Klassen, die die Fenster / Frames und die Formulare enhalten und zur grafischen Benutzerinteraktion dienen
 * Formulare sind von ihren Fenstern technisch getrennt
-=======
-* Enth√§lt Klassen, die die Fenster / Frames und die Formulare enhalten und zur grafischen Benutzerinteraktion dienen
->>>>>>> branch 'master' of https://github.com/neo4share/audicon.git
 
 ## Weitere Informationen 
 * N√ºtzliche Informationen zur Extraktion von Meta Daten aus einem MP3 File: 
 * https://stackoverflow.com/questions/1645803/how-to-read-mp3-file-tags
 * https://stackoverflow.com/questions/10824027/get-the-metadata-of-a-file
 
-<<<<<<< HEAD
 ( Kommen aber aus Gr¸nden der Einfachheit und Aufgabenstellung in diesem Programm nicht zur Anwendung ) 
-=======
-( Kommen aber aus Gr√ºnden der Einfachheit und Aufgabenstellung in diesem Programm nicht zur Anwendung ) 
 
-
->>>>>>> branch 'master' of https://github.com/neo4share/audicon.git
