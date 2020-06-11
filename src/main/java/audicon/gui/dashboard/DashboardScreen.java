@@ -18,6 +18,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import javax.sound.sampled.UnsupportedAudioFileException;
+import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
 import javax.swing.JLabel;
@@ -34,9 +35,10 @@ import audicon.gui.history.HistoryScreen;
 import audicon.gui.baseScreens.*;
 
 public class DashboardScreen extends MainScreen {
-
-	private JPanel userPanel;
-	private JPanel actionPanel;
+	
+	private JPanel topPanel;
+	private JPanel middlePanel;
+	private JPanel bottomPanel;
 	
 	private User user;
 	
@@ -46,61 +48,73 @@ public class DashboardScreen extends MainScreen {
 		super("AudiCon Dashboard");
 		screen = this;
 		this.user = user;
-		setLayout(new FlowLayout());
-		assembleUserPanel();
-		assembleActionPanel();
+		setLayout(new GridLayout(3,1));
+		assembleTopPanel();
+		assembleMiddlePanel();
+		assembleBottomPanel();
 		setVisible(true);
 	}
 	
-	private void assembleUserPanel() {
-		userPanel = new JPanel();
-		userPanel.setSize(200, 500);
-		userPanel.setLayout(new BorderLayout());
+	private void assembleTopPanel() {
+		topPanel = new JPanel();
+		topPanel.setSize(800, 100);
+		topPanel.setLayout(new FlowLayout());
 		
-		JLabel welcomeLabel = new JLabel("<html><h1>Welcome User</h1><p>" + user.getUsername() + "</p></html>");
-		userPanel.add(welcomeLabel, BorderLayout.NORTH);
-		
-		JButton logoutButton = new JButton("Logout");
-		logoutButton.addActionListener(new LogoutListener());
-		userPanel.add(logoutButton);
-		
-		add(userPanel);
+		JLabel welcomeLabel = new JLabel("<html><h1>Welcome user <b>" + user.getUsername() + "</b></h1></html>");
+		topPanel.add(welcomeLabel);
+		this.add(topPanel);
 	}
 	
-	private void assembleActionPanel() {
-		actionPanel = new JPanel();
-		actionPanel.setSize(600,500);
-		actionPanel.setLayout(new GridLayout(2,2));
+	private void assembleMiddlePanel() {
+		middlePanel = new JPanel();
+		middlePanel.setLayout(null);
 		
 		ActionPanel topLeftPanel = new ActionPanel();
+		topLeftPanel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+		topLeftPanel.setBounds(150, 0, 200, 100);
 		JLabel convert = new JLabel("Convert a file");
 		convert.addMouseListener(new MouseListener(DashboardAction.ACTION_CONVERT));
 		convert.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		topLeftPanel.add(convert);
-		actionPanel.add(topLeftPanel);
+		middlePanel.add(topLeftPanel);
 		
 		ActionPanel topRightPanel = new ActionPanel();
+		topRightPanel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+		topRightPanel.setBounds(400,0,200,100);
 		JLabel conversionHistory = new JLabel("See conversion history");
 		conversionHistory.addMouseListener(new MouseListener(DashboardAction.ACTION_SEE_HISTORY));
 		conversionHistory.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		topRightPanel.add(conversionHistory);
-		actionPanel.add(topRightPanel);
+		middlePanel.add(topRightPanel);
 		
+		add(middlePanel);
+		
+	}
+	
+	private void assembleBottomPanel() {
+		bottomPanel = new JPanel();
+		bottomPanel.setLayout(null);
+		
+		
+		JButton logout = new JButton("Logout");
+		logout.addActionListener(new LogoutListener());
 		ActionPanel bottomLeftPanel = new ActionPanel();
-		JLabel empty = new JLabel("");
-		bottomLeftPanel.add(empty);
-		actionPanel.add(bottomLeftPanel);
+		bottomLeftPanel.setBounds(150,0,200,100);
+		bottomLeftPanel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+		bottomLeftPanel.add(logout);
+		bottomPanel.add(bottomLeftPanel);
 		
 		ActionPanel bottomRightPanel = new ActionPanel();
+		bottomRightPanel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+		bottomRightPanel.setBounds(400,0,200,100);
 		JLabel about = new JLabel("About AudiCon");
 		about.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		about.addMouseListener(new MouseListener(DashboardAction.ACTION_ABOUT));
 		about.setForeground(Color.BLUE.darker());
 		bottomRightPanel.add(about);
-		actionPanel.add(bottomRightPanel);
+		bottomPanel.add(bottomRightPanel);
 		
-		add(actionPanel);
-		
+		add(bottomPanel);
 	}
 	
 	class ActionPanel extends JPanel {

@@ -47,13 +47,14 @@ public class WelcomeScreen extends SmallScreen {
 	class ButtonListener implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent e) {
+			screen.dispose();
 			if(e.getActionCommand().equals("Register")) {
 				new RegisterScreen();
 			}
 			else {
 				new LoginScreen();
 			}
-			screen.dispose();
+
 		}
 	}
 }
